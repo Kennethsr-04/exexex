@@ -1,0 +1,154 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class RobotSimulacion extends JFrame {
+    private Robot robot;
+    private JCheckBox cabezaCheckBox, cuerpoCheckBox, brazoCheckBox, piernaCheckBox;
+    private JTextArea resultadosArea;
+    
+    // Constructor de la clase
+    public RobotSimulacion() {
+        // Configuración inicial del JFrame
+        setTitle("Simulación del Robot");
+        setLayout(new BorderLayout());
+        setSize(400, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Crear el panel para los JCheckBox
+        JPanel panelCheckBoxes = new JPanel();
+        panelCheckBoxes.setLayout(new GridLayout(4, 1));  // 4 partes del robot
+
+        // Crear los JCheckBox para las partes del robot
+        cabezaCheckBox = new JCheckBox("Cabeza");
+        cuerpoCheckBox = new JCheckBox("Cuerpo");
+        brazoCheckBox = new JCheckBox("Brazo");
+        piernaCheckBox = new JCheckBox("Pierna");
+
+        // Añadir los JCheckBox al panel
+        panelCheckBoxes.add(cabezaCheckBox);
+        panelCheckBoxes.add(cuerpoCheckBox);
+        panelCheckBoxes.add(brazoCheckBox);
+        panelCheckBoxes.add(piernaCheckBox);
+
+        // Crear el área de resultados
+        resultadosArea = new JTextArea();
+        resultadosArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(resultadosArea);
+
+        // Añadir los componentes al JFrame
+        add(panelCheckBoxes, BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.SOUTH);
+
+        // Inicializar el robot con los valores predeterminados
+        robot = new Robot("Robot Base", 100, 1);
+
+        // Acciones para cada JCheckBox que modifican las características del robot
+        cabezaCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarRobot();
+            }
+        });
+
+        cuerpoCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarRobot();
+            }
+        });
+
+        brazoCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarRobot();
+            }
+        });
+
+        piernaCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarRobot();
+            }
+        });
+
+        // Hacer visible el JFrame
+        setVisible(true);
+    }
+
+    // Método para actualizar el robot en función de los JCheckBox seleccionados
+    private void actualizarRobot() {
+        // Restablecer los valores a los predeterminados (base)
+        robot.setResistencia(100);
+        robot.setVelocidad(1);
+
+        // Modificar valores según los JCheckBox seleccionados
+        if (cabezaCheckBox.isSelected()) {
+            robot.setResistencia(robot.getResistencia() + 20);  // +20 resistencia
+            robot.setVelocidad(robot.getVelocidad() - 0.1);  // -0.1 velocidad
+        }
+        if (cuerpoCheckBox.isSelected()) {
+            robot.setResistencia(robot.getResistencia() + 30);  // +30 resistencia
+            robot.setVelocidad(robot.getVelocidad() - 0.2);  // -0.2 velocidad
+        }
+        if (brazoCheckBox.isSelected()) {
+            robot.setResistencia(robot.getResistencia() + 10);  // +10 resistencia
+            robot.setVelocidad(robot.getVelocidad() - 0.05);  // -0.05 velocidad
+        }
+        if (piernaCheckBox.isSelected()) {
+            robot.setResistencia(robot.getResistencia() + 15);  // +15 resistencia
+            robot.setVelocidad(robot.getVelocidad() - 0.1);  // -0.1 velocidad
+        }
+
+        // Mostrar los resultados actualizados
+        resultadosArea.setText("Robot: " + robot.getNombre() +
+                "\nResistencia: " + robot.getResistencia() +
+                "\nVelocidad: " + robot.getVelocidad());
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new RobotSimulacion();
+            }
+        });
+    }
+}
+
+class Robot {
+    private String nombre;
+    private double resistencia;
+    private double velocidad;
+
+    public Robot(String nombre, double resistencia, double velocidad) {
+        this.nombre = nombre;
+        this.resistencia = resistencia;
+        this.velocidad = velocidad;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public double getResistencia() {
+        return resistencia;
+    }
+
+    public void setResistencia(double resistencia) {
+        this.resistencia = resistencia;
+    }
+
+    public double getVelocidad() {
+        return velocidad;
+    }
+
+    public void setVelocidad(double velocidad) {
+        this.velocidad = velocidad;
+    }
+
+    @Override
+    public String toString() {
+        return "Robot: " + nombre + "\nResistencia: " + resistencia + "\nVelocidad: " + velocidad;
+    }
+}
