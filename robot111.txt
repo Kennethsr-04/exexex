@@ -152,3 +152,77 @@ class Robot {
         return "Robot: " + nombre + "\nResistencia: " + resistencia + "\nVelocidad: " + velocidad;
     }
 }
+
+/////////////////////////////////////
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class MenuEjemplo extends JFrame {
+
+    public MenuEjemplo() {
+        // Configuración del JFrame principal
+        setTitle("Ventana Principal");
+        setSize(400, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Crear un JMenuBar
+        JMenuBar menuBar = new JMenuBar();
+
+        // Crear un JMenu
+        JMenu opcionesMenu = new JMenu("Opciones");
+
+        // Crear un JMenuItem
+        JMenuItem abrirVentanaItem = new JMenuItem("Abrir Nueva Ventana");
+
+        // Agregar un ActionListener al JMenuItem
+        abrirVentanaItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Al seleccionar el JMenuItem, abrir un nuevo JFrame
+                abrirNuevaVentana();
+            }
+        });
+
+        // Añadir el JMenuItem al JMenu
+        opcionesMenu.add(abrirVentanaItem);
+
+        // Añadir el JMenu al JMenuBar
+        menuBar.add(opcionesMenu);
+
+        // Establecer el JMenuBar al JFrame principal
+        setJMenuBar(menuBar);
+
+        // Hacer visible el JFrame principal
+        setVisible(true);
+    }
+
+    // Método para abrir un nuevo JFrame
+    private void abrirNuevaVentana() {
+        // Crear un nuevo JFrame
+        JFrame nuevaVentana = new JFrame("Nueva Ventana");
+
+        // Configuración de la nueva ventana
+        nuevaVentana.setSize(300, 200);
+        nuevaVentana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        // Crear un JLabel para mostrar en la nueva ventana
+        JLabel mensaje = new JLabel("¡Has abierto una nueva ventana!", SwingConstants.CENTER);
+        nuevaVentana.add(mensaje);
+
+        // Hacer visible la nueva ventana
+        nuevaVentana.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        // Iniciar la aplicación
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new MenuEjemplo();
+            }
+        });
+    }
+}
+
+
